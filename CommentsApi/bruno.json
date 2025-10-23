@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "CommentsApi",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

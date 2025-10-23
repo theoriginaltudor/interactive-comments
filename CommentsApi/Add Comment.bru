@@ -1,0 +1,25 @@
+meta {
+  name: Add Comment
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5048/comment
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "Score":0,
+    "Content": "You did an excelent job!!",
+    "ParentCommentId": -1,
+    "UserId": -1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
