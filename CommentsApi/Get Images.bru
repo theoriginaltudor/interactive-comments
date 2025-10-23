@@ -1,0 +1,16 @@
+meta {
+  name: Get Images
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:5048/images/favicon-32x32.png
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
