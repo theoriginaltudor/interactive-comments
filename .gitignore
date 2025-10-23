@@ -1,3 +1,40 @@
 bin/*
 obj/*
 app.db
+
+# Logs
+InteractiveComments/logs
+InteractiveComments/*.log
+InteractiveComments/npm-debug.log*
+InteractiveComments/yarn-debug.log*
+InteractiveComments/yarn-error.log*
+InteractiveComments/pnpm-debug.log*
+InteractiveComments/lerna-debug.log*
+
+InteractiveComments/node_modules
+InteractiveComments/.DS_Store
+InteractiveComments/dist
+InteractiveComments/dist-ssr
+InteractiveComments/coverage
+InteractiveComments/*.local
+
+# Editor directories and files
+InteractiveComments/.vscode/*
+InteractiveComments/!.vscode/extensions.json
+InteractiveComments/.idea
+InteractiveComments/*.suo
+InteractiveComments/*.ntvs*
+InteractiveComments/*.njsproj
+InteractiveComments/*.sln
+InteractiveComments/*.sw?
+
+InteractiveComments/*.tsbuildinfo
+
+InteractiveComments/.eslintcache
+
+# Cypress
+InteractiveComments//cypress/videos/
+InteractiveComments//cypress/screenshots/
+
+# Vitest
+InteractiveComments/__screenshots__/
