@@ -14,7 +14,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "gen-types": "pnpx openapi-typescript http://localhost:5048/openapi/v1.json -o types.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.15",
