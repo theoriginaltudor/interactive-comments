@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Counter from './components/Counter.vue'
+import DeleteCard from './components/DeleteCard.vue'
 import IconButton from './components/IconButton.vue'
 import MainButton from './components/MainButton.vue'
 import Typography from './components/Typography.vue'
@@ -37,5 +38,7 @@ const decrease = () => firstCounter.value--
       <MainButton>reply</MainButton>
       <MainButton disabled>reply</MainButton>
     </div>
+
+    <DeleteCard />
   </main>
 </template>
