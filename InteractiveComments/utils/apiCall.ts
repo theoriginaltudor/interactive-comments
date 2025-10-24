@@ -36,18 +36,26 @@ export const fetchApi = async <T>(path: string, options?: RequestInit): Promise<
     const data = await response.json()
     return { data: data as T }
   } catch (error) {
-    return { error: { status: 0, message: error instanceof Error ? error.message : 'Unknown error' } }
+    return {
+      error: { status: 0, message: error instanceof Error ? error.message : 'Unknown error' },
+    }
   }
 }
 
 // Typed API functions
 export const getComments = (): Promise<ApiResponse<Comment[]>> => fetchApi<Comment[]>('/comments')
 export const getUsers = (): Promise<ApiResponse<User[]>> => fetchApi<User[]>('/users')
-export const createComment = (comment: Comment): Promise<ApiResponse<Comment>> => 
-  fetchApi<Comment>('/comment', { 
-    method: 'POST', 
+export const createComment = (comment: Comment): Promise<ApiResponse<Comment>> =>
+  fetchApi<Comment>('/comment', {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(comment) 
+    body: JSON.stringify(comment),
   })
-export const deleteComment = (id: number): Promise<ApiResponse<undefined>> => 
+export const deleteComment = (id: number): Promise<ApiResponse<undefined>> =>
   fetchApi<undefined>('/comment/' + id, { method: 'DELETE' })
+export const updateComment = (comment: Comment): Promise<ApiResponse<Comment>> =>
+  fetchApi<Comment>('/comment/' + IdleDeadline, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(comment),
+  })

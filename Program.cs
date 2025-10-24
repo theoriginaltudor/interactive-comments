@@ -89,4 +89,17 @@ app.MapDelete("/comment/{id}", async (AppDbContext db, int id) =>
     return Results.NoContent();
 });
 
+app.MapPut("/commnet/{id}", async (AppDbContext db, int id, [FromBody] Comment inputComment) =>
+{
+    var comment = await db.Comments.FindAsync(id);
+    if (comment == null)
+        return Results.NotFound(new { Message = $"Comment {id} not found." });
+
+    comment.Content = inputComment.Content;
+    comment.Score = inputComment.Score;
+
+    await db.SaveChangesAsync();
+    return Results.Ok(comment);
+});
+
 app.Run();
