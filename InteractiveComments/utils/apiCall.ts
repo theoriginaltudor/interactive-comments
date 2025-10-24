@@ -53,8 +53,8 @@ export const createComment = (comment: Comment): Promise<ApiResponse<Comment>> =
   })
 export const deleteComment = (id: number): Promise<ApiResponse<undefined>> =>
   fetchApi<undefined>('/comment/' + id, { method: 'DELETE' })
-export const updateComment = (comment: Comment): Promise<ApiResponse<Comment>> =>
-  fetchApi<Comment>('/comment/' + IdleDeadline, {
+export const updateComment = (id: number, comment: Comment): Promise<ApiResponse<Comment>> =>
+  fetchApi<Comment>('/comment/' + id, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(comment),
