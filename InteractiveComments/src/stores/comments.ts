@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { createComment, deleteComment, getComments, type Comment } from '../../utils/apiCall'
+import {
+  createComment,
+  deleteComment,
+  getComments,
+  updateComment,
+  type Comment,
+} from '../../utils/apiCall'
 
 export const useCommentsStore = defineStore('comments', () => {
   const comments = ref<Comment[] | null>(null)
@@ -26,6 +32,21 @@ export const useCommentsStore = defineStore('comments', () => {
     }
   }
 
+  const update = async (id: number, comment: Comment) => {
+    const { data, error: updateError } = await updateComment(id, comment)
+    if (updateError) {
+      error.value = 'Update error:' + updateError.message
+      return
+    }
+    if (data) {
+      const index = comments.value?.findIndex((comment) => comment.commentId == id)
+      if (index && index > -1) {
+        comments.value![index]!.content = comment.content
+        comments.value![index]!.score = comment.score
+      }
+    }
+  }
+
   const get = async () => {
     const { data, error: getError } = await getComments()
     if (getError) {
@@ -37,5 +58,5 @@ export const useCommentsStore = defineStore('comments', () => {
     }
   }
 
-  return { error, comments, add, remove, get }
+  return { error, comments, add, remove, get, update }
 })
