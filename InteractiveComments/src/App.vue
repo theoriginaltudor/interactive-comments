@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Counter from './components/Counter.vue'
+import IconButton from './components/IconButton.vue'
 import Typography from './components/Typography.vue'
 
 const firstCounter = ref(30)
@@ -20,6 +21,15 @@ const decrease = () => firstCounter.value--
     <div class="flex gap-300">
       <Counter :count="firstCounter" @up="increase" @down="decrease" />
       <Counter :count="firstCounter" @up="increase" @down="decrease" disabled />
+    </div>
+
+    <div class="grid gap-300 grid-cols-3 w-1/3">
+      <IconButton type="reply" />
+      <IconButton type="delete" />
+      <IconButton type="edit" />
+      <IconButton type="reply" disabled />
+      <IconButton type="delete" disabled />
+      <IconButton type="edit" disabled />
     </div>
   </main>
 </template>
