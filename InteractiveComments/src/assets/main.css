@@ -15,4 +15,9 @@
   --color-pink-200: hsl(357 100% 86%);
 
   --font-rubik-medium: 'Rubik', sans-serif;
+
+  --spacing-100: 8px;
+  --spacing-200: 16px;
+  --spacing-300: 24px;
+  --spacing-500: 40px;
 }
