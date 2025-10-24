@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Counter from './components/Counter.vue'
 import IconButton from './components/IconButton.vue'
+import MainButton from './components/MainButton.vue'
 import Typography from './components/Typography.vue'
 
 const firstCounter = ref(30)
@@ -30,6 +31,11 @@ const decrease = () => firstCounter.value--
       <IconButton type="reply" disabled />
       <IconButton type="delete" disabled />
       <IconButton type="edit" disabled />
+    </div>
+
+    <div class="flex gap-300">
+      <MainButton>reply</MainButton>
+      <MainButton disabled>reply</MainButton>
     </div>
   </main>
 </template>
