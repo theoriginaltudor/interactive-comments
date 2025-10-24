@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import Counter from './components/Counter.vue'
 import Typography from './components/Typography.vue'
+
+const firstCounter = ref(30)
+
+const increase = () => firstCounter.value++
+const decrease = () => firstCounter.value--
 </script>
 
 <template>
@@ -9,5 +16,10 @@ import Typography from './components/Typography.vue'
     <Typography as="h3" :preset="3">Hello here</Typography>
     <Typography as="label" :preset="4">Hello here</Typography>
     <Typography as="p">Hello here</Typography>
+
+    <div class="flex gap-300">
+      <Counter :count="firstCounter" @up="increase" @down="decrease" />
+      <Counter :count="firstCounter" @up="increase" @down="decrease" disabled />
+    </div>
   </main>
 </template>
