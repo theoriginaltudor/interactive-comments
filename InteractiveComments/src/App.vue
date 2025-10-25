@@ -11,11 +11,18 @@ onMounted(() => get())
 </script>
 
 <template>
-  <main class="p-10 flex flex-col gap-200 bg-grey-50 min-h-dvh">
-    <p>Length of list is {{ comments?.length }}</p>
+  <main class="p-10 bg-grey-50 min-h-dvh">
     <p v-if="error" class="text-red-600">{{ error }}</p>
     <component v-if="comments && comments.length > 0">
-      <CommentCard v-for="comment in comments" :comment="comment" />
+      <component v-for="comment in comments" class="flex flex-col gap-200">
+        <CommentCard :comment="comment" />
+        <div
+          v-if="comment.replies && comment.replies.length > 0"
+          class="ms-200 border-l-2 border-grey-500 ps-200 flex flex-col gap-200 py-200"
+        >
+          <CommentCard v-for="reply in comment.replies" :comment="reply" />
+        </div>
+      </component>
     </component>
   </main>
 </template>
