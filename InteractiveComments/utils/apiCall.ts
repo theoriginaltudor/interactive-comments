@@ -1,5 +1,5 @@
 import type { components } from '../types'
-const API_URL = 'http://localhost:5048/'
+const API_URL = 'http://localhost:5048'
 
 export const imageUrl: (path: string) => string = (path) => API_URL + 'images/' + path
 
@@ -13,8 +13,10 @@ export type Asset = components['schemas']['Asset']
 
 export const fetchApi = async <T>(path: string, options?: RequestInit): Promise<ApiResponse<T>> => {
   try {
-    const response = await fetch(apiUrl(path), options)
-
+    const url = apiUrl(path)
+    console.log('Fetching:', url, options)
+    const response = await fetch(url, options)
+    console.log('Response status:', response.status, response.ok)
     if (!response.ok) {
       let message = `HTTP error! status: ${response.status}`
       try {
@@ -25,17 +27,19 @@ export const fetchApi = async <T>(path: string, options?: RequestInit): Promise<
       } catch {
         // No JSON body
       }
+      console.log('API Error:', { status: response.status, message })
       return { error: { status: response.status, message } }
     }
 
-    const contentLength = response.headers.get('content-length')
-    if (response.status === 204 || contentLength === '0' || contentLength === null) {
+    if (response.status === 204) {
       return { data: undefined as T }
     }
 
     const data = await response.json()
+    console.log('Data received:', data)
     return { data: data as T }
   } catch (error) {
+    console.log('Fetch error:', error)
     return {
       error: { status: 0, message: error instanceof Error ? error.message : 'Unknown error' },
     }
