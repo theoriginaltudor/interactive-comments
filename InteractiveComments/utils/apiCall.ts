@@ -1,5 +1,5 @@
 import type { components } from '../types'
-const API_URL = 'http://localhost:5048'
+export const API_URL = 'http://localhost:5048'
 
 export const imageUrl: (path: string) => string = (path) => API_URL + 'images/' + path
 
