@@ -55,10 +55,13 @@ const upVote = async () => {
       <div class="flex gap-200 items-center">
         <img :src="avatar" alt="" class="rounded-full w-8 aspect-square" />
         <Typography :preset="2">{{ comment.user?.name }}</Typography>
+        <Typography :preset="3" v-if="owned" class="text-white bg-purple-600 rounded-sm px-1.5"
+          >you</Typography
+        >
         <Typography :preset="3" class="flex-1 text-grey-500">{{ formattedDate }}</Typography>
 
         <IconButton type="reply" v-if="!owned" />
-        <span v-else>
+        <span v-else class="flex gap-200">
           <IconButton type="delete" />
           <IconButton type="edit" />
         </span>
