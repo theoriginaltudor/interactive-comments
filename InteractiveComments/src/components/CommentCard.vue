@@ -6,6 +6,8 @@ import IconButton from './IconButton.vue'
 import Typography from './Typography.vue'
 const props = defineProps<{
   comment: Comment
+  disabled?: boolean
+  owned?: boolean
 }>()
 const emit = defineEmits<{
   (e: 'remove', id: number): Promise<void>
@@ -48,13 +50,18 @@ const upVote = async () => {
 
 <template>
   <div class="flex gap-300 p-12 rounded-lg bg-white">
-    <Counter :count="comment.score ?? 0" @down="downVote" @up="upVote" />
+    <Counter :count="comment.score ?? 0" @down="downVote" @up="upVote" :disabled="disabled" />
     <div class="flex flex-col flex-1 gap-200">
       <div class="flex gap-200 items-center">
         <img :src="avatar" alt="" class="rounded-full w-8 aspect-square" />
         <Typography :preset="2">{{ comment.user?.name }}</Typography>
         <Typography :preset="3" class="flex-1 text-grey-500">{{ formattedDate }}</Typography>
-        <IconButton type="reply" />
+
+        <IconButton type="reply" v-if="!owned" />
+        <span v-else>
+          <IconButton type="delete" />
+          <IconButton type="edit" />
+        </span>
       </div>
       <Typography as="p" :preset="3" class="text-grey-500">{{ comment.content }}</Typography>
     </div>
