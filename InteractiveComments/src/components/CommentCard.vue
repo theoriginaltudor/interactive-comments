@@ -7,6 +7,10 @@ import Typography from './Typography.vue'
 const props = defineProps<{
   comment: Comment
 }>()
+const emit = defineEmits<{
+  (e: 'remove', id: number): Promise<void>
+  (e: 'update', id: number, comment: Comment): Promise<void>
+}>()
 const comment = computed(() => props.comment)
 const avatar = computed(() => {
   const assets = comment.value.user?.assets
@@ -27,16 +31,30 @@ const formattedDate = computed(() => {
     return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`
   return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? 's' : ''} ago`
 })
+
+const downVote = async () => {
+  console.log('emit in comment')
+  const newComment = comment.value
+  newComment.score! -= 1
+  await emit('update', comment.value.userId!, newComment!)
+}
+
+const upVote = async () => {
+  console.log('emit in comment')
+  const newComment = comment.value
+  newComment.score! += 1
+  await emit('update', comment.value.userId!, newComment!)
+}
 </script>
 
 <template>
   <div class="flex gap-300 p-12 rounded-lg bg-white">
-    <Counter :count="comment.score ?? 0" />
-    <div class="flex flex-col flex-1">
+    <Counter :count="comment.score ?? 0" @down="downVote" @up="upVote" />
+    <div class="flex flex-col flex-1 gap-200">
       <div class="flex gap-200 items-center">
         <img :src="avatar" alt="" class="rounded-full w-8 aspect-square" />
         <Typography :preset="2">{{ comment.user?.name }}</Typography>
-        <Typography :preset="3" class="flex-1">{{ formattedDate }}</Typography>
+        <Typography :preset="3" class="flex-1 text-grey-500">{{ formattedDate }}</Typography>
         <IconButton type="reply" />
       </div>
       <Typography as="p" :preset="3" class="text-grey-500">{{ comment.content }}</Typography>
