@@ -14,8 +14,8 @@ onMounted(() => get())
   <div class="p-10 bg-grey-50 min-h-dvh">
     <main class="max-w-4xl mx-auto">
       <p v-if="error" class="text-red-600">{{ error }}</p>
-      <component v-if="comments && comments.length > 0">
-        <component v-for="comment in comments" class="flex flex-col gap-200">
+      <div v-if="comments && comments.length > 0">
+        <div v-for="comment in comments" class="flex flex-col gap-200">
           <CommentCard :comment="comment" @remove="remove" @update="update" />
           <div
             v-if="comment.replies && comment.replies.length > 0"
@@ -28,8 +28,8 @@ onMounted(() => get())
               @update="update"
             />
           </div>
-        </component>
-      </component>
+        </div>
+      </div>
     </main>
   </div>
 </template>
