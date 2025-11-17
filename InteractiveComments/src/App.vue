@@ -26,10 +26,10 @@ onMounted(() => {
         <div v-for="comment in comments" class="flex flex-col gap-200">
           <CommentCard
             :comment="comment"
-            @remove="remove"
-            @update="update"
             :owned="user?.userId == comment.userId"
             :disabled="user?.userId !== comment.userId"
+            @remove="remove"
+            @update="update"
           />
           <div
             v-if="comment.replies && comment.replies.length > 0"
@@ -38,10 +38,10 @@ onMounted(() => {
             <CommentCard
               v-for="reply in comment.replies"
               :comment="reply"
-              @remove="remove"
-              @update="update"
               :owned="user?.userId == comment.userId"
               :disabled="user?.userId !== comment.userId"
+              @remove="remove"
+              @update="update"
             />
           </div>
         </div>
