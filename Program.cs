@@ -63,9 +63,9 @@ app.MapGet("/comments", async (AppDbContext db) =>
     return Results.Ok(comments);
 });
 
-app.MapGet("/users", async (AppDbContext db) =>
+app.MapGet("/user", async (AppDbContext db) =>
 {
-    var users = await db.Users.Include(u => u.Assets).AsNoTracking().ToListAsync();
+    var users = await db.Users.FirstOrDefaultAsync(u => u.UserId == -1);
     return Results.Ok(users);
 });
 

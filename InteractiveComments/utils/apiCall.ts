@@ -47,7 +47,7 @@ export const fetchApi = async <T>(path: string, options?: RequestInit): Promise<
 
 // Typed API functions
 export const getComments = (): Promise<ApiResponse<Comment[]>> => fetchApi<Comment[]>('/comments')
-export const getUsers = (): Promise<ApiResponse<User[]>> => fetchApi<User[]>('/users')
+export const getUser = (): Promise<ApiResponse<User>> => fetchApi<User>('/user')
 export const createComment = (comment: Comment): Promise<ApiResponse<Comment>> =>
   fetchApi<Comment>('/comment', {
     method: 'POST',
