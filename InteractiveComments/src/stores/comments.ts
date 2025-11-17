@@ -19,8 +19,10 @@ export const useCommentsStore = defineStore('comments', () => {
       return
     }
     if (data) {
-      if (comments.value !== null) comments.value.push(data)
-      else comments.value = [data]
+      if (comments.value !== null) {
+        if (data.parentCommentId) comments.value[data.parentCommentId]?.replies?.push(data)
+        else comments.value.push(data)
+      } else comments.value = [data]
     }
   }
 
@@ -30,6 +32,13 @@ export const useCommentsStore = defineStore('comments', () => {
       error.value = 'Delete error:' + deleteError.message
       return
     }
+    const [firstIndex, secondIndex] = getPathIndexes(comments.value!, id)
+    if (!comments.value) return
+    if (firstIndex !== undefined) {
+      if (secondIndex !== undefined) {
+        comments.value[firstIndex]!.replies!.splice(secondIndex, 1)
+      } else comments.value.splice(firstIndex, 1)
+    } else error.value = 'Remove error client'
   }
 
   const update = async (comment: Comment) => {
