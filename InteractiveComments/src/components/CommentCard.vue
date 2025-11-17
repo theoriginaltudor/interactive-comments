@@ -10,6 +10,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'remove', id: number): Promise<void>
   (e: 'update', id: number, comment: Comment): Promise<void>
+  (e: 'test'): void
 }>()
 const comment = computed(() => props.comment)
 const avatar = computed(() => {
@@ -33,15 +34,13 @@ const formattedDate = computed(() => {
 })
 
 const downVote = async () => {
-  console.log('emit in comment')
-  const newComment = comment.value
+  const newComment = { ...comment.value }
   newComment.score! -= 1
   await emit('update', comment.value.userId!, newComment!)
 }
 
 const upVote = async () => {
-  console.log('emit in comment')
-  const newComment = comment.value
+  const newComment = { ...comment.value }
   newComment.score! += 1
   await emit('update', comment.value.userId!, newComment!)
 }

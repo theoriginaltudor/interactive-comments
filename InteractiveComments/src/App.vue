@@ -21,7 +21,12 @@ onMounted(() => get())
             v-if="comment.replies && comment.replies.length > 0"
             class="ms-200 border-l-2 border-grey-500 ps-200 flex flex-col gap-200 py-200"
           >
-            <CommentCard v-for="reply in comment.replies" :comment="reply" />
+            <CommentCard
+              v-for="reply in comment.replies"
+              :comment="reply"
+              @remove="remove"
+              @update="update"
+            />
           </div>
         </component>
       </component>
