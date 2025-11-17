@@ -1,6 +1,7 @@
 bin/*
 obj/*
 app.db
+app.db-*
 
 # Logs
 InteractiveComments/logs
