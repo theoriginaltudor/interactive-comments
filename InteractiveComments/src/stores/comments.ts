@@ -39,11 +39,13 @@ export const useCommentsStore = defineStore('comments', () => {
       return
     }
     if (data) {
-      const index = comments.value?.findIndex((com) => com.commentId == comment.commentId)
-      if (index && index > -1) {
-        comments.value![index]!.content = comment.content
-        comments.value![index]!.score = comment.score
-      }
+      const [firstIndex, secondIndex] = getPathIndexes(comments.value!, comment.commentId!)
+      if (!comments.value) return
+      if (firstIndex !== undefined) {
+        if (secondIndex !== undefined) {
+          comments.value[firstIndex]!.replies![secondIndex] = comment
+        } else comments.value[firstIndex] = comment
+      } else error.value = 'Update error client'
     }
   }
 
@@ -60,3 +62,20 @@ export const useCommentsStore = defineStore('comments', () => {
 
   return { error, comments, add, remove, get, update }
 })
+
+const getPathIndexes = (list: Comment[], searchId: number): number[] => {
+  if (list.length == 0) return []
+
+  const index = list.findIndex((item) => item.commentId == searchId)
+  if (index != -1) {
+    return [index]
+  }
+  const indexList: number[] = []
+  for (let i = 0; i < list.length; i++) {
+    if (!list[i]?.replies) continue
+    const result = getPathIndexes(list[i]!.replies!, searchId)
+    if (result.length == 0) continue
+    indexList.push(i, ...result)
+  }
+  return indexList
+}
