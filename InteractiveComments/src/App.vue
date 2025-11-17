@@ -27,7 +27,7 @@ onMounted(() => {
           <CommentCard
             :comment="comment"
             :owned="user?.userId == comment.userId"
-            :disabled="user?.userId !== comment.userId"
+            :disabled="user?.userId == comment.userId"
             @remove="remove"
             @update="update"
           />
@@ -39,7 +39,7 @@ onMounted(() => {
               v-for="reply in comment.replies"
               :comment="reply"
               :owned="user?.userId == reply.userId"
-              :disabled="user?.userId !== reply.userId"
+              :disabled="user?.userId == reply.userId"
               @remove="remove"
               @update="update"
             />
