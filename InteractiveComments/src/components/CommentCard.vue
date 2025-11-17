@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{
   (e: 'remove', id: number): Promise<void>
-  (e: 'update', id: number, comment: Comment): Promise<void>
+  (e: 'update', comment: Comment): Promise<void>
   (e: 'test'): void
 }>()
 const comment = computed(() => props.comment)
@@ -36,13 +36,13 @@ const formattedDate = computed(() => {
 const downVote = async () => {
   const newComment = { ...comment.value }
   newComment.score! -= 1
-  await emit('update', comment.value.userId!, newComment!)
+  await emit('update', newComment!)
 }
 
 const upVote = async () => {
   const newComment = { ...comment.value }
   newComment.score! += 1
-  await emit('update', comment.value.userId!, newComment!)
+  await emit('update', newComment!)
 }
 </script>
 

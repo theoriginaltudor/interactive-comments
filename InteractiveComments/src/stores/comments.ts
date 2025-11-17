@@ -32,14 +32,14 @@ export const useCommentsStore = defineStore('comments', () => {
     }
   }
 
-  const update = async (id: number, comment: Comment) => {
-    const { data, error: updateError } = await updateComment(id, comment)
+  const update = async (comment: Comment) => {
+    const { data, error: updateError } = await updateComment(comment)
     if (updateError) {
       error.value = 'Update error:' + updateError.message
       return
     }
     if (data) {
-      const index = comments.value?.findIndex((comment) => comment.commentId == id)
+      const index = comments.value?.findIndex((com) => com.commentId == comment.commentId)
       if (index && index > -1) {
         comments.value![index]!.content = comment.content
         comments.value![index]!.score = comment.score
