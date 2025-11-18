@@ -22,8 +22,8 @@ onMounted(() => {
     <main class="max-w-4xl mx-auto">
       <p v-if="error" class="text-red-600">{{ error }}</p>
       <p v-if="userError" class="text-red-600">{{ userError }}</p>
-      <div v-if="comments && comments.length > 0">
-        <div v-for="comment in comments" class="flex flex-col gap-200">
+      <div v-if="comments && comments.length > 0" class="flex flex-col gap-6">
+        <div v-for="comment in comments" class="flex flex-col gap-6">
           <CommentCard
             :comment="comment"
             :owned="user?.userId == comment.userId"
@@ -33,7 +33,7 @@ onMounted(() => {
           />
           <div
             v-if="comment.replies && comment.replies.length > 0"
-            class="ms-200 border-l-2 border-grey-500 ps-200 flex flex-col gap-200 py-200"
+            class="ms-10 border-l-2 border-grey-100 ps-10 flex flex-col gap-6"
           >
             <CommentCard
               v-for="reply in comment.replies"
