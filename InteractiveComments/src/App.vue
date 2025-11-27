@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
-import CommentCard from './components/CommentCard.vue'
+import CommentCardHeader from './components/CommentCard/CommentCardHeader.vue'
+import CommentCard from './components/CommentCard/index.vue'
+import Typography from './components/Typography.vue'
 import { useCommentsStore } from './stores/comments'
 import { useUserStore } from './stores/user'
 const commentsStore = useCommentsStore()
@@ -26,11 +28,13 @@ onMounted(() => {
         <div v-for="comment in comments" class="flex flex-col gap-6">
           <CommentCard
             :comment="comment"
-            :owned="user?.userId == comment.userId"
             :disabled="user?.userId == comment.userId"
             @remove="remove"
             @update="update"
-          />
+          >
+            <CommentCardHeader :user-id="user?.userId || 0" />
+            <Typography as="p" :preset="3" class="text-grey-500">{{ comment.content }}</Typography>
+          </CommentCard>
           <div
             v-if="comment.replies && comment.replies.length > 0"
             class="ms-10 border-l-2 border-grey-100 ps-10 flex flex-col gap-6"
@@ -38,11 +42,15 @@ onMounted(() => {
             <CommentCard
               v-for="reply in comment.replies"
               :comment="reply"
-              :owned="user?.userId == reply.userId"
               :disabled="user?.userId == reply.userId"
               @remove="remove"
               @update="update"
-            />
+            >
+              <CommentCardHeader :user-id="user?.userId || 0" />
+              <Typography as="p" :preset="3" class="text-grey-500">{{
+                comment.content
+              }}</Typography>
+            </CommentCard>
           </div>
         </div>
       </div>
