@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDeleteStore } from '@/stores/delete'
 import { inject, type ComputedRef } from 'vue'
 import type { Comment } from '../../../utils/apiCall'
 import { formatDate, getAvatarUrl } from '../../../utils/cardUtils'
@@ -7,7 +8,13 @@ import Typography from '../Typography.vue'
 const props = defineProps<{
   userId: number
 }>()
+const emit = defineEmits<{
+  (e: 'delete', id: number): void
+  (e: 'edit', id: number): void
+  (e: 'reply', id: number): void
+}>()
 const comment = inject<ComputedRef<Comment>>('card-context')
+const { markForDeletion } = useDeleteStore()
 </script>
 <template>
   <div class="flex gap-200 items-center" v-if="comment">
@@ -23,7 +30,7 @@ const comment = inject<ComputedRef<Comment>>('card-context')
 
     <IconButton type="reply" v-if="userId != comment?.userId" />
     <span v-else class="flex gap-200">
-      <IconButton type="delete" />
+      <IconButton type="delete" @click="() => markForDeletion(comment?.commentId!)" />
       <IconButton type="edit" />
     </span>
   </div>

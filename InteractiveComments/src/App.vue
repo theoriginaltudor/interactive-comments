@@ -3,8 +3,10 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import CommentCardHeader from './components/CommentCard/CommentCardHeader.vue'
 import CommentCard from './components/CommentCard/index.vue'
+import DeleteCard from './components/DeleteCard.vue'
 import Typography from './components/Typography.vue'
 import { useCommentsStore } from './stores/comments'
+import { useDeleteStore } from './stores/delete'
 import { useUserStore } from './stores/user'
 const commentsStore = useCommentsStore()
 const { get } = commentsStore
@@ -12,6 +14,7 @@ const { comments, error } = storeToRefs(commentsStore)
 const userStore = useUserStore()
 const { get: getUser } = userStore
 const { user, error: userError } = storeToRefs(userStore)
+const { deleteCommentId } = storeToRefs(useDeleteStore())
 
 onMounted(() => {
   get()
@@ -48,5 +51,12 @@ onMounted(() => {
         </div>
       </div>
     </main>
+    <div
+      v-if="deleteCommentId"
+      class="flex justify-center items-center absolute w-full h-full top-0 left-0"
+    >
+      <div class="absolute w-full h-full opacity-50 bg-black" />
+      <DeleteCard :comment-id="deleteCommentId" class="relative rounded-lg" />
+    </div>
   </div>
 </template>

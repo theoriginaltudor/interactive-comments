@@ -1,6 +1,18 @@
 <script lang="ts" setup>
+import { useCommentsStore } from '@/stores/comments'
+import { useDeleteStore } from '@/stores/delete'
 import MainButton from './MainButton.vue'
 import Typography from './Typography.vue'
+const props = defineProps<{
+  commentId: number
+}>()
+const { remove } = useCommentsStore()
+const { emptyDeletion } = useDeleteStore()
+
+const deleteHandler = async () => {
+  await remove(props.commentId)
+  emptyDeletion()
+}
 </script>
 
 <template>
@@ -11,8 +23,8 @@ import Typography from './Typography.vue'
       undone.
     </Typography>
     <div class="flex justify-between">
-      <MainButton class="bg-grey-500">No, cancel</MainButton>
-      <MainButton class="bg-pink-400">Yes, delete</MainButton>
+      <MainButton class="bg-grey-500" @click="() => emptyDeletion()">No, cancel</MainButton>
+      <MainButton class="bg-pink-400" @click="deleteHandler">Yes, delete</MainButton>
     </div>
   </div>
 </template>
