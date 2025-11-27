@@ -2,6 +2,7 @@
 import { computed, inject, ref, type ComputedRef, type Ref } from 'vue'
 import type { Comment } from '../../../utils/apiCall'
 
+import { useCommentsStore } from '@/stores/comments'
 import MainButton from '../MainButton.vue'
 import Typography from '../Typography.vue'
 const props = defineProps<{
@@ -12,9 +13,15 @@ const comment = inject<ComputedRef<Comment>>('card-context')
 const textAreaValue = computed(() =>
   props.userName ? `@${props.userName} ${comment?.value.content}` : comment?.value.content,
 )
+const { update } = useCommentsStore()
 const localContent = ref<string | undefined>(textAreaValue.value)
-const updateHandler = () => {
-  console.log(localContent.value)
+const updateHandler = async () => {
+  const newComment = JSON.parse(JSON.stringify(comment?.value))
+  if (newComment) {
+    newComment.content = localContent.value?.replace('@' + props.userName, '') || ''
+    await update(newComment)
+  }
+
   if (editMode) editMode.value = false
 }
 </script>
