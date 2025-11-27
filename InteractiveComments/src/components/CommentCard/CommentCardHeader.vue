@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useDeleteStore } from '@/stores/delete'
-import { inject, type ComputedRef } from 'vue'
+import { inject, type ComputedRef, type Ref } from 'vue'
 import type { Comment } from '../../../utils/apiCall'
 import { formatDate, getAvatarUrl } from '../../../utils/cardUtils'
 import IconButton from '../IconButton.vue'
@@ -9,11 +9,10 @@ const props = defineProps<{
   userId: number
 }>()
 const emit = defineEmits<{
-  (e: 'delete', id: number): void
-  (e: 'edit', id: number): void
   (e: 'reply', id: number): void
 }>()
 const comment = inject<ComputedRef<Comment>>('card-context')
+const editMode = inject<Ref<boolean>>('edit-mode')
 const { markForDeletion } = useDeleteStore()
 </script>
 <template>
@@ -30,8 +29,12 @@ const { markForDeletion } = useDeleteStore()
 
     <IconButton type="reply" v-if="userId != comment?.userId" />
     <span v-else class="flex gap-200">
-      <IconButton type="delete" @click="() => markForDeletion(comment?.commentId!)" />
-      <IconButton type="edit" />
+      <IconButton
+        type="delete"
+        :disabled="editMode"
+        @click="() => !editMode && markForDeletion(comment?.commentId!)"
+      />
+      <IconButton type="edit" :disabled="editMode" @click="() => !editMode && (editMode = true)" />
     </span>
   </div>
   <div v-else>Context missing</div>

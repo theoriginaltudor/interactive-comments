@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useCommentsStore } from '@/stores/comments'
-import { computed, provide, type ComputedRef } from 'vue'
+import { computed, provide, ref, type ComputedRef, type Ref } from 'vue'
 import { type Comment } from '../../../utils/apiCall'
 import Counter from '../Counter.vue'
 const props = defineProps<{
@@ -8,6 +8,7 @@ const props = defineProps<{
   disabled?: boolean
 }>()
 const comment = computed(() => props.comment)
+const editMode = ref(false)
 const { update } = useCommentsStore()
 
 const downVote = async () => {
@@ -22,6 +23,7 @@ const upVote = async () => {
   await update(newComment!)
 }
 provide<ComputedRef<Comment>>('card-context', comment)
+provide<Ref<boolean>>('edit-mode', editMode)
 </script>
 
 <template>

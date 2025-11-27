@@ -2,10 +2,10 @@
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import AddCommnetCard from './components/AddCommnetCard.vue'
+import CommentCardBody from './components/CommentCard/CommentCardBody.vue'
 import CommentCardHeader from './components/CommentCard/CommentCardHeader.vue'
 import CommentCard from './components/CommentCard/index.vue'
 import DeleteCard from './components/DeleteCard.vue'
-import Typography from './components/Typography.vue'
 import { useCommentsStore } from './stores/comments'
 import { useDeleteStore } from './stores/delete'
 import { useUserStore } from './stores/user'
@@ -32,7 +32,7 @@ onMounted(() => {
         <div v-for="comment in comments" class="flex flex-col gap-6">
           <CommentCard :comment="comment" :disabled="user?.userId == comment.userId">
             <CommentCardHeader :user-id="user?.userId || 0" />
-            <Typography as="p" :preset="3" class="text-grey-500">{{ comment.content }}</Typography>
+            <CommentCardBody />
           </CommentCard>
           <div
             v-if="comment.replies && comment.replies.length > 0"
@@ -44,10 +44,7 @@ onMounted(() => {
               :disabled="user?.userId == reply.userId"
             >
               <CommentCardHeader :user-id="user?.userId || 0" />
-              <Typography as="p" :preset="3" class="text-grey-500">
-                <span class="text-purple-600 font-medium">@{{ comment.user?.name }}</span>
-                {{ reply.content }}
-              </Typography>
+              <CommentCardBody :user-name="comment.user?.name" />
             </CommentCard>
           </div>
         </div>
