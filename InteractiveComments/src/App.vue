@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import AddCommnetCard from './components/AddCommnetCard.vue'
 import CommentCardHeader from './components/CommentCard/CommentCardHeader.vue'
 import CommentCard from './components/CommentCard/index.vue'
 import DeleteCard from './components/DeleteCard.vue'
@@ -43,13 +44,15 @@ onMounted(() => {
               :disabled="user?.userId == reply.userId"
             >
               <CommentCardHeader :user-id="user?.userId || 0" />
-              <Typography as="p" :preset="3" class="text-grey-500">{{
-                comment.content
-              }}</Typography>
+              <Typography as="p" :preset="3" class="text-grey-500">
+                <span class="text-purple-600 font-medium">@{{ comment.user?.name }}</span>
+                {{ reply.content }}
+              </Typography>
             </CommentCard>
           </div>
         </div>
       </div>
+      <div v-if="user" class="mt-6"><AddCommnetCard /></div>
     </main>
     <div
       v-if="deleteCommentId"
